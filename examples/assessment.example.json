@@ -1,0 +1,150 @@
+{
+  "schema_version": "1.0.0",
+  "rubric": {
+    "id": "CAB-FREE-SPACE",
+    "version": "0.1.0"
+  },
+  "representation_ref": {
+    "image_sha256": "9c1d4b7e2a6f8035c4e1b9d7a2f60358e1c4b9d7a2f60358e1c4b9d7a2f60358",
+    "site_id": "SITE-ECHO-11",
+    "cabinet_id": "SITE-ECHO-11-CAB-01"
+  },
+  "measurements": {
+    "total_u": 42,
+    "occupied_u": 31,
+    "blanked_u": 4,
+    "open_u": 5,
+    "occluded_u": 2,
+    "free_u": 9,
+    "largest_contiguous_free_u": 5,
+    "usable_free_u": 7,
+    "reserved_u": 0,
+    "missing_blanking_u": 5,
+    "free_runs": [
+      {
+        "u_from": 2,
+        "u_to": 3,
+        "usable": false,
+        "excluded_reason": "required_clearance"
+      },
+      {
+        "u_from": 4,
+        "u_to": 5,
+        "usable": true,
+        "excluded_reason": null
+      },
+      {
+        "u_from": 21,
+        "u_to": 25,
+        "usable": true,
+        "excluded_reason": null
+      }
+    ]
+  },
+  "airflow": {
+    "blanking_compliant": false,
+    "top_clearance_ok": true,
+    "cable_obstruction": "moderate"
+  },
+  "verdict": {
+    "value": "limited",
+    "rule_id": 8,
+    "basis": "missing_blanking_u=5 meets the >=3 trigger of rule 8. Note usable_free_u=7 would otherwise have satisfied rule 10 (adequate); the airflow deficiency is what constrains this cabinet, not the amount of space.",
+    "abstain_reason": null,
+    "reshoot_instruction": null
+  },
+  "uncertainty": {
+    "free_u_low": 9,
+    "free_u_high": 11,
+    "verdict_stable_across_interval": true,
+    "confidence": 0.64
+  },
+  "not_determinable": [
+    {
+      "aspect": "usable_depth",
+      "clause_id": "DEPTH-3.0",
+      "note": "Single frontal image. Available U may be unusable if equipment protrudes behind the rail."
+    },
+    {
+      "aspect": "power_capacity",
+      "clause_id": "CAP-5.0",
+      "note": "Power compartment not visible. 7U usable does NOT imply 7U of expansion capacity."
+    }
+  ],
+  "findings": [
+    {
+      "clause_id": "BLANK-1.0",
+      "severity": "major",
+      "text": "5 open rack units have no blanking panels fitted (U2-U5, U25), permitting hot air recirculation across the cabinet face.",
+      "recommendation": "Fit blanking panels to all five positions. No equipment change required.",
+      "evidence": {
+        "u_span": [
+          2,
+          5
+        ],
+        "bbox_px": [
+          204,
+          3355,
+          1820,
+          3510
+        ]
+      },
+      "source": "policy_engine"
+    },
+    {
+      "clause_id": "CABLE-4.3",
+      "severity": "minor",
+      "text": "A cable bundle obscures U6-U7 with approximately 72% coverage. These positions are reported as occluded and excluded from free space.",
+      "recommendation": "Dress the bundle into the side cable manager so these positions become assessable.",
+      "evidence": {
+        "u_span": [
+          6,
+          7
+        ],
+        "bbox_px": [
+          260,
+          3280,
+          1760,
+          3352
+        ]
+      },
+      "source": "vlm_judgement"
+    },
+    {
+      "clause_id": "OCC-1.0",
+      "severity": "info",
+      "text": "U26-U42 classified as unknown_hardware at 0.58 confidence. Counted as occupied per fail-closed rule.",
+      "recommendation": "Confirm the installed equipment against the site record; if this is a recognised model, add it to the equipment catalogue.",
+      "evidence": {
+        "u_span": [
+          26,
+          42
+        ],
+        "bbox_px": [
+          204,
+          1927,
+          1820,
+          2583
+        ]
+      },
+      "source": "policy_engine"
+    }
+  ],
+  "narrative": "This 42U cabinet has 9 free rack units, of which 7 are realistically usable: U2-U3 are consumed as required clearance above the baseband, and U6-U7 could not be assessed behind a cable bundle. The constraint here is not space but airflow - five open positions lack blanking panels, which is what drives the limited verdict. Fitting five panels is a no-risk change that would move this cabinet to adequate. Note that usable depth and spare power capacity could not be determined from a single frontal image, so 7U should not be read as 7U of installable capacity without a site check.",
+  "review": {
+    "required": false,
+    "reason": null,
+    "status": "pending",
+    "reviewer_id": null,
+    "corrected_verdict": null,
+    "reviewed_at": null
+  },
+  "provenance": {
+    "produced_at": "2026-09-24T11:05:02Z",
+    "policy_engine_version": "0.1.0",
+    "perception_version": "0.1.0-stub",
+    "vlm_model": null,
+    "vlm_prompt_version": null,
+    "run_id": "run-2026-09-24-0001"
+  }
+}

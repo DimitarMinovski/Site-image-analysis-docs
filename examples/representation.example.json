@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "image": {
+    "sha256": "9c1d4b7e2a6f8035c4e1b9d7a2f60358e1c4b9d7a2f60358e1c4b9d7a2f60358",
+    "captured_at": "2026-09-18T09:42:11Z",
+    "source": "installer_upload",
+    "width_px": 3024,
+    "height_px": 4032
+  },
+  "site": {
+    "site_id": "SITE-ECHO-11",
+    "cabinet_id": "SITE-ECHO-11-CAB-01",
+    "cabinet_type": "BYB-501-42U",
+    "cabinet_total_u_declared": 42
+  },
+  "quality": {
+    "gate_passed": true,
+    "issues": [],
+    "sharpness": 0.71,
+    "glare_fraction": 0.08,
+    "face_visible_fraction": 0.94
+  },
+  "rectification": {
+    "applied": true,
+    "homography_rmse_px": 1.4,
+    "estimated_yaw_deg": 3.2
+  },
+  "scale": {
+    "px_per_u": 38.6,
+    "method": "rail_hole_pattern",
+    "confidence": 0.93,
+    "residual_pct": 0.9,
+    "measured_total_u": 42
+  },
+  "u_map": [
+    { "u_from": 1, "u_to": 1, "state": "occupied", "occupied_class": "equipment",
+      "equipment_model": "Baseband 6648", "equipment_u_height_catalogue": 1,
+      "confidence": 0.91, "bbox_px": [204, 3510, 1820, 3549] },
+    { "u_from": 2, "u_to": 5, "state": "open", "confidence": 0.88,
+      "bbox_px": [204, 3355, 1820, 3510] },
+    { "u_from": 6, "u_to": 7, "state": "occluded", "occlusion_cause": "cable_bundle",
+      "confidence": 0.64, "bbox_px": [204, 3278, 1820, 3355] },
+    { "u_from": 8, "u_to": 20, "state": "occupied", "occupied_class": "equipment",
+      "confidence": 0.86, "bbox_px": [204, 2776, 1820, 3278] },
+    { "u_from": 21, "u_to": 24, "state": "blanked", "confidence": 0.90,
+      "bbox_px": [204, 2622, 1820, 2776] },
+    { "u_from": 25, "u_to": 25, "state": "open", "confidence": 0.87,
+      "bbox_px": [204, 2583, 1820, 2622] },
+    { "u_from": 26, "u_to": 42, "state": "occupied", "occupied_class": "unknown_hardware",
+      "confidence": 0.58, "bbox_px": [204, 1927, 1820, 2583] }
+  ],
+  "obstructions": [
+    { "type": "cable_bundle", "u_span": [6, 7], "coverage_fraction": 0.72,
+      "bbox_px": [260, 3280, 1760, 3352], "confidence": 0.81 }
+  ],
+  "clearance_observations": [
+    { "above_u": 1, "equipment_model": "Baseband 6648", "free_u_above": 4, "confidence": 0.88 }
+  ],
+  "depth": {
+    "determinable": false,
+    "reason": "single_frontal_image"
+  },
+  "capacity": {
+    "power_determinable": false,
+    "spare_breaker_positions": null,
+    "ports_determinable": false,
+    "spare_ports": null
+  },
+  "provenance": {
+    "perception_version": "0.1.0-stub",
+    "detector_version": null,
+    "vlm_model": null,
+    "vlm_prompt_version": null,
+    "produced_at": "2026-09-24T11:05:00Z",
+    "pipeline_stages": ["A_rectify", "B_scale"]
+  }
+}

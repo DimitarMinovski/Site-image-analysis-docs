@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+
+# the GitHub token lives outside this repo, at
+#   ~/.config/site-image-analysis/github-token
+# so it can never be committed by accident. Never add a token file here.
+*.token
+.env
+.env.*
+
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# editor
+.vscode/
+.idea/
+
+# transient output
+*.log
+tmp/
+out/

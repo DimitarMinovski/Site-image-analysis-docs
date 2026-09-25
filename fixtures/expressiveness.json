@@ -1,0 +1,178 @@
+{
+  "purpose": "Expressiveness test set. Each case is a real situation that occurs in site cabinets. The question is not 'does this JSON validate' but 'can the schema represent this situation without losing information'. A case that validates while silently discarding reality is the most dangerous outcome, because nothing alerts anyone.",
+  "expectations": {
+    "expressible": "Schema represents the situation fully. Must validate.",
+    "gap_silent": "Schema accepts a document but information is lost with no signal. DANGEROUS - fix before labelling.",
+    "gap_loud": "Schema rejects the document. Undesirable but safe, because it fails visibly."
+  },
+  "cases": [
+    {
+      "case": "01-nominal",
+      "description": "Small cabinet, unambiguous occupancy, good capture.",
+      "expectation": "expressible",
+      "representation": {
+        "schema_version": "1.0.0",
+        "image": { "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f01", "width_px": 3024, "height_px": 4032, "source": "test_fixture" },
+        "site": { "site_id": "T-001", "cabinet_id": "T-001-CAB-1", "cabinet_type": "TEST-6U", "cabinet_total_u_declared": 6 },
+        "quality": { "gate_passed": true, "issues": [] },
+        "scale": { "px_per_u": 40.0, "method": "rail_hole_pattern", "confidence": 0.95, "measured_total_u": 6 },
+        "u_map": [
+          { "u_from": 1, "u_to": 2, "state": "occupied", "occupied_class": "equipment", "confidence": 0.93 },
+          { "u_from": 3, "u_to": 4, "state": "open", "confidence": 0.9 },
+          { "u_from": 5, "u_to": 6, "state": "occupied", "occupied_class": "equipment", "confidence": 0.91 }
+        ],
+        "provenance": { "perception_version": "0.1.0", "produced_at": "2026-09-25T10:00:00Z" }
+      }
+    },
+    {
+      "case": "02-total-u-mismatch",
+      "description": "Measured height disagrees with the cabinet type record. Should trigger GEOM-1.0 abstention downstream, but the representation must be able to state both numbers.",
+      "expectation": "expressible",
+      "representation": {
+        "schema_version": "1.0.0",
+        "image": { "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f02", "width_px": 3024, "height_px": 4032, "source": "test_fixture" },
+        "site": { "site_id": "T-002", "cabinet_id": "T-002-CAB-1", "cabinet_type": "BYB-501-42U", "cabinet_total_u_declared": 42 },
+        "quality": { "gate_passed": true, "issues": [] },
+        "scale": { "px_per_u": 38.2, "method": "rail_hole_pattern", "confidence": 0.91, "measured_total_u": 45 },
+        "u_map": [
+          { "u_from": 1, "u_to": 20, "state": "occupied", "occupied_class": "equipment", "confidence": 0.88 },
+          { "u_from": 21, "u_to": 45, "state": "open", "confidence": 0.85 }
+        ],
+        "provenance": { "perception_version": "0.1.0", "produced_at": "2026-09-25T10:00:00Z" }
+      }
+    },
+    {
+      "case": "03-unmeasurable",
+      "description": "Glare and a partly closed door. Scale cannot be established. Must be representable so the policy engine can abstain rather than guess.",
+      "expectation": "expressible",
+      "representation": {
+        "schema_version": "1.0.0",
+        "image": { "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f03", "width_px": 2048, "height_px": 1536, "source": "test_fixture" },
+        "site": { "site_id": "T-003", "cabinet_id": "T-003-CAB-1", "cabinet_type": null, "cabinet_total_u_declared": null },
+        "quality": { "gate_passed": false, "issues": ["excessive_glare", "door_obstructing", "rails_not_detected"], "glare_fraction": 0.41 },
+        "scale": { "px_per_u": null, "method": "unavailable", "confidence": 0.15, "measured_total_u": null },
+        "u_map": [
+          { "u_from": 1, "u_to": 6, "state": "occluded", "occlusion_cause": "glare", "confidence": 0.2 }
+        ],
+        "provenance": { "perception_version": "0.1.0", "produced_at": "2026-09-25T10:00:00Z" }
+      }
+    },
+    {
+      "case": "04-zero-u-pdu",
+      "description": "A vertically mounted zero-U PDU on the side rail. Extremely common in real cabinets. It occupies no rack units but consumes depth and obstructs access.",
+      "expectation": "gap_silent",
+      "lost_information": "The PDU cannot be recorded at all. u_map is indexed by integer U spans with u_from >= 1, so a zero-U occupant has nowhere to live. The document validates and the PDU silently does not exist.",
+      "consequence": "Access and depth assessment are wrong, and the equipment inventory is incomplete. No signal is raised.",
+      "representation": {
+        "schema_version": "1.0.0",
+        "image": { "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f04", "width_px": 3024, "height_px": 4032, "source": "test_fixture" },
+        "site": { "site_id": "T-004", "cabinet_id": "T-004-CAB-1", "cabinet_type": "TEST-6U", "cabinet_total_u_declared": 6 },
+        "quality": { "gate_passed": true, "issues": [] },
+        "scale": { "px_per_u": 40.0, "method": "rail_hole_pattern", "confidence": 0.94, "measured_total_u": 6 },
+        "u_map": [
+          { "u_from": 1, "u_to": 3, "state": "occupied", "occupied_class": "equipment", "confidence": 0.9 },
+          { "u_from": 4, "u_to": 6, "state": "open", "confidence": 0.88 }
+        ],
+        "provenance": { "perception_version": "0.1.0", "produced_at": "2026-09-25T10:00:00Z" }
+      }
+    },
+    {
+      "case": "05-half-width-pair",
+      "description": "Two half-width units mounted side by side in the same rack unit, on a shelf or half-width brackets.",
+      "expectation": "gap_silent",
+      "lost_information": "u_map has no horizontal dimension. A U is wholly occupied or wholly not. Two devices in U3 collapse to one entry and one equipment_model; the second device disappears.",
+      "consequence": "Equipment inventory undercounts. If one is removed, the U still reads as occupied and available space is understated.",
+      "representation": {
+        "schema_version": "1.0.0",
+        "image": { "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f05", "width_px": 3024, "height_px": 4032, "source": "test_fixture" },
+        "site": { "site_id": "T-005", "cabinet_id": "T-005-CAB-1", "cabinet_type": "TEST-6U", "cabinet_total_u_declared": 6 },
+        "quality": { "gate_passed": true, "issues": [] },
+        "scale": { "px_per_u": 40.0, "method": "rail_hole_pattern", "confidence": 0.94, "measured_total_u": 6 },
+        "u_map": [
+          { "u_from": 1, "u_to": 2, "state": "open", "confidence": 0.9 },
+          { "u_from": 3, "u_to": 3, "state": "occupied", "occupied_class": "equipment", "equipment_model": "Router A", "confidence": 0.87 },
+          { "u_from": 4, "u_to": 6, "state": "occupied", "occupied_class": "equipment", "confidence": 0.9 }
+        ],
+        "provenance": { "perception_version": "0.1.0", "produced_at": "2026-09-25T10:00:00Z" }
+      }
+    },
+    {
+      "case": "06-rear-mounted-front-blanked",
+      "description": "A blanking panel on the front, but equipment mounted from the rear behind it. The front plane says available; reality says occupied.",
+      "expectation": "gap_silent",
+      "lost_information": "The representation records U3-U4 as blanked, which the rubric counts as free. There is no field to say 'front available, rear occupied'. depth.determinable=false flags that depth is unknown, but it does not attach that doubt to specific U positions.",
+      "consequence": "The most dangerous case in the set. Free space is reported that cannot be installed into, and the verdict may read adequate when the cabinet is effectively full.",
+      "representation": {
+        "schema_version": "1.0.0",
+        "image": { "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f06", "width_px": 3024, "height_px": 4032, "source": "test_fixture" },
+        "site": { "site_id": "T-006", "cabinet_id": "T-006-CAB-1", "cabinet_type": "TEST-6U", "cabinet_total_u_declared": 6 },
+        "quality": { "gate_passed": true, "issues": [] },
+        "scale": { "px_per_u": 40.0, "method": "rail_hole_pattern", "confidence": 0.94, "measured_total_u": 6 },
+        "u_map": [
+          { "u_from": 1, "u_to": 2, "state": "occupied", "occupied_class": "equipment", "confidence": 0.92 },
+          { "u_from": 3, "u_to": 4, "state": "blanked", "confidence": 0.9 },
+          { "u_from": 5, "u_to": 6, "state": "occupied", "occupied_class": "equipment", "confidence": 0.9 }
+        ],
+        "depth": { "determinable": false, "reason": "single_frontal_image" },
+        "provenance": { "perception_version": "0.1.0", "produced_at": "2026-09-25T10:00:00Z" }
+      }
+    },
+    {
+      "case": "07-two-cabinets-one-image",
+      "description": "A wide shot containing two adjacent cabinets, both in scope.",
+      "expectation": "gap_silent",
+      "lost_information": "The representation is single-cabinet: site.cabinet_id is one string. The second cabinet cannot be recorded, so it is silently dropped.",
+      "consequence": "Half the assessed estate goes missing with no error. Mitigation is a capture rule (one cabinet per image) plus a perception check that rejects multi-cabinet frames.",
+      "representation": {
+        "schema_version": "1.0.0",
+        "image": { "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f07", "width_px": 4032, "height_px": 3024, "source": "test_fixture" },
+        "site": { "site_id": "T-007", "cabinet_id": "T-007-CAB-1", "cabinet_type": "TEST-6U", "cabinet_total_u_declared": 6 },
+        "quality": { "gate_passed": true, "issues": [] },
+        "scale": { "px_per_u": 22.0, "method": "rail_hole_pattern", "confidence": 0.72, "measured_total_u": 6 },
+        "u_map": [
+          { "u_from": 1, "u_to": 6, "state": "occupied", "occupied_class": "equipment", "confidence": 0.8 }
+        ],
+        "provenance": { "perception_version": "0.1.0", "produced_at": "2026-09-25T10:00:00Z" }
+      }
+    },
+    {
+      "case": "08-non-integer-u-device",
+      "description": "A device of non-integer height occupying U4 and part of U5.",
+      "expectation": "gap_silent",
+      "lost_information": "u_from and u_to are integers, so the device must be rounded to 4-5. The remaining part-U is neither available nor recorded as consumed.",
+      "consequence": "Minor undercount of free space, but it compounds in cabinets with several such devices, and it makes measured totals disagree with physical reality for no visible reason.",
+      "representation": {
+        "schema_version": "1.0.0",
+        "image": { "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f08", "width_px": 3024, "height_px": 4032, "source": "test_fixture" },
+        "site": { "site_id": "T-008", "cabinet_id": "T-008-CAB-1", "cabinet_type": "TEST-6U", "cabinet_total_u_declared": 6 },
+        "quality": { "gate_passed": true, "issues": [] },
+        "scale": { "px_per_u": 40.0, "method": "rail_hole_pattern", "confidence": 0.93, "measured_total_u": 6 },
+        "u_map": [
+          { "u_from": 1, "u_to": 3, "state": "open", "confidence": 0.9 },
+          { "u_from": 4, "u_to": 5, "state": "occupied", "occupied_class": "equipment", "confidence": 0.86 },
+          { "u_from": 6, "u_to": 6, "state": "open", "confidence": 0.9 }
+        ],
+        "provenance": { "perception_version": "0.1.0", "produced_at": "2026-09-25T10:00:00Z" }
+      }
+    },
+    {
+      "case": "09-invalid-overlapping-spans",
+      "description": "Control case. Overlapping U spans, which is physically impossible. The validator must catch this loudly.",
+      "expectation": "gap_loud",
+      "lost_information": "None - this document is simply wrong and must be rejected.",
+      "consequence": "Proves the semantic layer catches malformed perception output rather than trusting it.",
+      "representation": {
+        "schema_version": "1.0.0",
+        "image": { "sha256": "a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f09", "width_px": 3024, "height_px": 4032, "source": "test_fixture" },
+        "site": { "site_id": "T-009", "cabinet_id": "T-009-CAB-1", "cabinet_type": "TEST-6U", "cabinet_total_u_declared": 6 },
+        "quality": { "gate_passed": true, "issues": [] },
+        "scale": { "px_per_u": 40.0, "method": "rail_hole_pattern", "confidence": 0.94, "measured_total_u": 6 },
+        "u_map": [
+          { "u_from": 1, "u_to": 4, "state": "occupied", "occupied_class": "equipment", "confidence": 0.9 },
+          { "u_from": 3, "u_to": 6, "state": "open", "confidence": 0.9 }
+        ],
+        "provenance": { "perception_version": "0.1.0", "produced_at": "2026-09-25T10:00:00Z" }
+      }
+    }
+  ]
+}

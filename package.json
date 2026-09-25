@@ -1,0 +1,21 @@
+{
+  "name": "site-image-analysis",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AI image analysis service for site installation use cases. Step 2: the contract (schemas, rubric, capture standard).",
+  "scripts": {
+    "validate": "node tools/validate.mjs",
+    "expressiveness": "node tools/expressiveness.mjs",
+    "check": "npm run validate && npm run expressiveness",
+    "git:init": "node tools/git.mjs init",
+    "git:status": "node tools/git.mjs status",
+    "git:log": "node tools/git.mjs log",
+    "git:push": "node tools/git.mjs push"
+  },
+  "dependencies": {
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "isomorphic-git": "^1.27.1"
+  }
+}
