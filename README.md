@@ -44,8 +44,39 @@ tools/
 
 ```bash
 npm install
-npm run validate
+npm run validate        # Levels 0+1: structure + semantic invariants
+npm run expressiveness  # Level 3: can the schema represent reality
+npm run check           # both
 ```
+
+---
+
+## Version control
+
+Repository: <https://github.com/DimitarMinovski/Site-image-analysis-docs>, branch `main`.
+
+Commits are authored as `Kiro CLI <kiro-cli@localhost>` so machine-authored
+changes are distinguishable from human ones in the history. Identity is set
+repo-locally; global git config is untouched.
+
+Commit messages record **why** a change was made, not just what changed. The
+history is intended to be read back as a decision log.
+
+Standard `git` works normally. Authentication goes through the GitHub CLI
+without persisting a helper into global config:
+
+```bash
+git -c credential.helper='!gh auth git-credential' push
+```
+
+`gh auth setup-git` would make that permanent, at the cost of writing to global
+git config.
+
+`tools/git.mjs` is a pure-JavaScript git implementation (isomorphic-git) kept as
+a fallback. It was needed because Apple's `git` refuses to run until the Xcode
+licence is accepted, which was the case when this repo was created. It writes a
+standard `.git` directory — verified with `git fsck` — so both tools operate on
+the same repository interchangeably.
 
 ---
 
