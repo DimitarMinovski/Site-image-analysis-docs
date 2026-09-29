@@ -34,7 +34,7 @@ These are the basis of the scale measurement and need no input from you.
 ### 3.1 Cabinet types in scope — **BLOCKING**
 
 **Needed:** every cabinet type the service will assess, with its properties.
-**Why:** `GEOM-1.0` cross-checks measured height against the type record; without
+**Why:** `GEOM-1.0` cross-checks measured height against the type record; §without
 it, the integrity check that catches scale failures cannot run.
 **Format:** `intake/cabinet-types.csv`
 **Provider:** site data / cabinet product owner

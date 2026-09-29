@@ -13,8 +13,8 @@ First use case: **cabinet free space** (`CAB-FREE-SPACE`).
 |---|---|---|
 | 1 | Prerequisites: data approval, model route, ownership | **done** |
 | 2 | **The contract**: schemas, rubric, capture standard | **built, awaiting sign-off** |
-| 3 | Gold set and evaluation harness | next |
-| 4 | Walking skeleton (upload → stub → UI) | |
+| 3 | Gold set and evaluation harness | **in progress** — data intake with DUX |
+| 4 | Walking skeleton (upload → stub → UI) | **planned** — see docs/step4-walking-skeleton.md |
 | 5 | Perception: rectify + scale | |
 | 6 | Representation + policy engine | |
 | 7 | Judgement layer (VLM) | |
