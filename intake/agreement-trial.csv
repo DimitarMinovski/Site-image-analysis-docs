@@ -1,0 +1,13 @@
+image_id,labeller,site_id,cabinet_id,cabinet_type,image_class,total_u,occupied_u,blanked_u,open_u,occluded_u,usable_free_u,verdict,question_raised,notes
+# 20-image agreement trial. TWO labellers each complete all 20 rows INDEPENDENTLY.
+# No discussion, no shared screen. Work only from docs/rubrics/CAB-FREE-SPACE.md.
+#
+# image_class      typical | awkward | extreme      (target mix: 12 / 4 / 4)
+# verdict          adequate | limited | critical | abstain
+# question_raised  IMPORTANT: if you needed to ask someone a question to fill a row,
+#                  write the question here instead of asking it. Each question is a
+#                  defect in the rubric and is the most valuable output of this trial.
+#
+# Pass criteria: verdict agreement >= 18/20, usable_free_u within +/-1U on >= 17/20,
+# and ZERO critical-vs-adequate disagreements.
+EXAMPLE-IMG-001,EXAMPLE-labeller-A,SITE-X,SITE-X-CAB-1,BYB-501,typical,42,31,4,5,2,7,limited,Is an empty shelf occupied or available?,EXAMPLE ROW - delete

@@ -1,0 +1,9 @@
+cabinet_type,total_u,rail_type,rails_visible,usable_depth_mm,airflow_design,has_variants,in_scope,notes
+# Delete the EXAMPLE rows below. One row per cabinet type the service will assess.
+# rail_type        universal | square | threaded
+# rails_visible    yes | covered      <- covered types can never satisfy GEOM-1.1 and will always abstain
+# airflow_design   front_to_back | bottom_to_top | other
+# has_variants     yes | no           <- plinths and extension bays cause legitimate GEOM-1.0 mismatches
+# in_scope         yes | no
+EXAMPLE-BYB-501,42,universal,yes,600,front_to_back,yes,yes,EXAMPLE ROW - delete. Plinth variant adds 3U
+EXAMPLE-RBS-6601,12,square,covered,400,bottom_to_top,no,no,EXAMPLE ROW - delete. Rails covered so excluded

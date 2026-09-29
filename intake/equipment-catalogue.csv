@@ -1,0 +1,9 @@
+equipment_model,u_height,full_width,requires_top_clearance,top_clearance_u,requires_bottom_clearance,bottom_clearance_u,source_document,source_section,notes
+# Delete the EXAMPLE rows below. One row per equipment model appearing in these cabinets.
+# u_height                  integer U. If a model is non-integer, note it and see intake item 4.7
+# full_width                yes | no   <- 'no' answers intake item 4.6 (half-width units)
+# requires_top_clearance    yes | no   <- drives THERMAL-2.1, which forces a critical verdict
+# top_clearance_u           required free U directly above. Leave blank if not required
+# source_document           the CPI or product doc stating the clearance. THIS IS THE AUTHORITY for THERMAL-2.1
+EXAMPLE-Baseband 6648,1,yes,yes,2,no,,EXAMPLE CPI ref - delete,4.2,EXAMPLE ROW - delete
+EXAMPLE-Router 6675,2,yes,no,,no,,EXAMPLE CPI ref - delete,,EXAMPLE ROW - delete
