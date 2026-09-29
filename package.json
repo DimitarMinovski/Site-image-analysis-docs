@@ -7,11 +7,13 @@
   "scripts": {
     "validate": "node tools/validate.mjs",
     "expressiveness": "node tools/expressiveness.mjs",
-    "check": "npm run validate && npm run expressiveness",
+    "check": "npm run validate && npm run expressiveness && npm run clauses",
     "git:init": "node tools/git.mjs init",
     "git:status": "node tools/git.mjs status",
     "git:log": "node tools/git.mjs log",
-    "git:push": "node tools/git.mjs push"
+    "git:push": "node tools/git.mjs push",
+    "clauses": "node tools/clauses.mjs check",
+    "clauses:render": "node tools/clauses.mjs render"
   },
   "dependencies": {
     "ajv": "8.17.1",
