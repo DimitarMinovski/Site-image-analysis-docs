@@ -58,3 +58,14 @@ def stats() -> dict:
     """Row counts and per-clause override rates. Cheap operational visibility."""
     with db.conn() as c:
         return {**db.counts(c), "clause_overrides": db.clause_override_rates(c)}
+
+
+@router.get("/insights")
+def insights() -> dict:
+    """Correlated findings across the whole corpus, framed for R&D and for the
+    customer. Aggregation lives server-side, next to the data, so it is testable
+    and the browser is not sent every assessment document."""
+    from ..insights import compute
+
+    with db.conn() as c:
+        return compute(c)
