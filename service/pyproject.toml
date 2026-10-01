@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "site-image-analysis-service"
+version = "0.1.0"
+description = "Walking skeleton for CAB-FREE-SPACE image analysis"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi==0.115.6",
+  "uvicorn[standard]==0.34.0",
+  "psycopg[binary]==3.2.3",
+  "jsonschema==4.23.0",
+  "pillow==11.0.0",
+  "python-multipart==0.0.20",
+  "pydantic==2.10.4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==8.3.4", "httpx==0.28.1"]
+aws = ["boto3==1.35.90"]
+openai = ["openai==1.59.3"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools]
+# Explicit: the flat layout has app/, worker/, tests/ and migrations/ side by
+# side, and automatic discovery cannot tell which are packages.
+packages = ["app", "app.routes", "app.ports", "worker"]

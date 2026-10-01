@@ -22,3 +22,12 @@ node_modules/
 *.log
 tmp/
 out/
+
+# python service
+service/.venv/
+service/var/
+service/.env
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/

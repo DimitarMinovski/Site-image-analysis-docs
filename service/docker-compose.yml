@@ -1,0 +1,13 @@
+# Alternative to a locally installed Postgres, for anyone who has Docker.
+# The application only needs DATABASE_URL, so either source works.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: siteimg
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d siteimg"]
+      interval: 3s
+      retries: 10
