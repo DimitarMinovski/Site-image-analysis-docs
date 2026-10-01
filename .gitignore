@@ -26,6 +26,7 @@ out/
 # python service
 service/.venv/
 service/var/
+var/          # STORAGE_ROOT default resolves to the repo root
 service/.env
 __pycache__/
 *.pyc
